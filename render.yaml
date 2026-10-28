@@ -1,0 +1,65 @@
+services:
+  - type: web
+    name: the-gourmet-walk
+    runtime: node
+    plan: free
+    buildCommand: npm ci && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PAYMENT_MODE
+        value: test
+      - key: PAYMENT_CURRENCY
+        value: INR
+      - key: TOUR_CURRENCY
+        value: INR
+      - key: ADMIN_USERNAME
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: DB_HOST
+        sync: false
+      - key: DB_PORT
+        value: "3306"
+      - key: DB_USER
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
+      - key: DB_NAME
+        sync: false
+      - key: APP_BASE_URL
+        sync: false
+      - key: BUSINESS_NAME
+        value: The Gourmet Walk
+      - key: BUSINESS_ADDRESS
+        sync: false
+      - key: BUSINESS_LOCATION_LABEL
+        sync: false
+      - key: BUSINESS_LOCATION_MODE
+        sync: false
+      - key: BUSINESS_TIME_ZONE
+        sync: false
+      - key: BUSINESS_LATITUDE
+        sync: false
+      - key: BUSINESS_LONGITUDE
+        sync: false
+      - key: BUSINESS_DIRECTIONS_URL
+        sync: false
+      - key: BUSINESS_HOURS
+        sync: false
+      - key: SMTP_HOST
+        sync: false
+      - key: SMTP_PORT
+        value: "587"
+      - key: SMTP_SECURE
+        value: "false"
+      - key: SMTP_USER
+        sync: false
+      - key: SMTP_PASSWORD
+        sync: false
+      - key: NOTIFICATION_FROM
+        sync: false
