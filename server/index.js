@@ -1,6 +1,7 @@
 import 'dotenv/config';
 import { createHmac, randomBytes, scryptSync, timingSafeEqual } from 'node:crypto';
 import express from 'express';
+import path from 'node:path';
 import { closePool, getPool } from './db.js';
 import { sendNotification } from './notifications.js';
 import shopRouter, { stripeWebhookRouter } from './shop.js';
@@ -86,6 +87,13 @@ function cookieOptions(request, maxAge) {
 
 app.use('/api/stripe/webhook', stripeWebhookRouter);
 app.use(express.json({ limit: '20kb' }));
+
+// Render and other single-service hosts can serve the built Vite frontend and API together.
+const frontendDist = path.resolve(process.cwd(), 'dist');
+
+app.get('/api/health', (_request, response) => {
+  response.json({ status: 'ok' });
+});
 
 app.get('/api/admin/session', (request, response) => {
   const session = getSession(request);
@@ -414,6 +422,15 @@ app.post('/api/inquiries', async (request, response) => {
 app.use('/api', shopRouter);
 app.use('/api', toursRouter);
 app.use('/api/admin', adminOnly, adminToursRouter);
+
+// Keep API routes above this fallback so client-side routes load on refresh.
+app.use(express.static(frontendDist, { index: false }));
+app.get('*', (request, response, next) => {
+  if (request.path.startsWith('/api/')) return next();
+  response.sendFile(path.join(frontendDist, 'index.html'), (error) => {
+    if (error) next(error);
+  });
+});
 
 app.use((error, _request, response, _next) => {
   if (error instanceof SyntaxError && 'body' in error) {
