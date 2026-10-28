@@ -91,10 +91,6 @@ app.use(express.json({ limit: '20kb' }));
 // Render and other single-service hosts can serve the built Vite frontend and API together.
 const frontendDist = path.resolve(process.cwd(), 'dist');
 
-app.get('/api/health', (_request, response) => {
-  response.json({ status: 'ok' });
-});
-
 app.get('/api/admin/session', (request, response) => {
   const session = getSession(request);
   if (!session) {
