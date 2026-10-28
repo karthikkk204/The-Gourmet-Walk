@@ -1,0 +1,31 @@
+{
+  "name": "the-gourmet-walk",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently \"npm:server:dev\" \"vite\"",
+    "server:dev": "node --watch server/index.js",
+    "seed:tours": "node server/seed-tours.js",
+    "build": "vite build",
+    "test": "node --test",
+    "preview": "vite preview",
+    "start": "node server/index.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "mysql2": "^3.14.0",
+    "nodemailer": "^10.2.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "stripe": "^23.0.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.1.4",
+    "@vitejs/plugin-react": "^4.4.1",
+    "concurrently": "^9.1.2",
+    "tailwindcss": "^4.1.4",
+    "vite": "^6.3.5"
+  }
+}
