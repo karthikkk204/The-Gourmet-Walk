@@ -2,7 +2,7 @@ services:
   - type: web
     name: the-gourmet-walk
     runtime: node
-    plan: starter
+    plan: free
     buildCommand: npm ci && npm run build
     startCommand: npm start
     healthCheckPath: /api/health
@@ -38,6 +38,8 @@ services:
       - key: BUSINESS_ADDRESS
         sync: false
       - key: BUSINESS_LOCATION_LABEL
+        sync: false
+      - key: BUSINESS_LOCATION_MODE
         sync: false
       - key: BUSINESS_TIME_ZONE
         sync: false
